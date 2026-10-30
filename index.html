@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savanna Drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Savanna Drive home">
+      <span class="brand-mark" aria-hidden="true"></span>Savanna Drive
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#fleet">Fleet</a>
+      <a href="#how">How it works</a>
+      <a href="#terms">Rates and terms</a>
+      <a href="#bookings">My bookings</a>
+    </nav>
+    <button class="btn ghost" id="themeToggle" type="button" aria-label="Switch colour theme">Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Car hire in Nairobi, priced in shillings</p>
+        <h1>Pick up at JKIA. Be in Nakuru by lunch.</h1>
+        <p class="lead">Compact hatchbacks for the CBD, SUVs for the Mara road and vans for the whole family. Fuel-efficient Japanese used cars, insured and serviced every 5,000 km.</p>
+        <ul class="hero-facts">
+          <li><strong>From KES 3,500</strong> per day</li>
+          <li><strong>8</strong> cars in the fleet</li>
+          <li><strong>6</strong> pickup points</li>
+        </ul>
+      </div>
+
+      <form class="search card" id="searchForm" novalidate>
+        <h2>Find a car</h2>
+        <label for="pickupLoc">Pickup and return</label>
+        <select id="pickupLoc"></select>
+
+        <div class="row2">
+          <div>
+            <label for="dateFrom">Pickup date</label>
+            <input type="date" id="dateFrom" required>
+          </div>
+          <div>
+            <label for="dateTo">Return date</label>
+            <input type="date" id="dateTo" required>
+          </div>
+        </div>
+        <p class="field-error" id="searchError" role="alert" hidden></p>
+        <button class="btn primary block" type="submit">Show available cars</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" id="fleet">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Our fleet</h2>
+          <p class="muted" id="tripSummary"></p>
+        </div>
+        <div class="controls">
+          <div class="chips" id="typeChips" role="group" aria-label="Filter by car type"></div>
+          <div class="sort">
+            <label for="sortBy">Sort by</label>
+            <select id="sortBy">
+              <option value="price-asc">Price, low to high</option>
+              <option value="price-desc">Price, high to low</option>
+              <option value="seats-desc">Most seats</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="grid" id="carGrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><h3>Choose dates and a car</h3><p>Totals update for the number of days you pick, so the price you see is the price you pay.</p></li>
+        <li><h3>Send your details</h3><p>Name, phone number and any extras. No card is needed to reserve.</p></li>
+        <li><h3>Collect with your licence</h3><p>Bring your driving licence and ID. Pay the rental and deposit at pickup.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="terms">
+    <div class="wrap">
+      <h2>Rates and terms</h2>
+      <div class="terms">
+        <dl>
+          <div><dt>Driver age</dt><dd>23 to 70 years, licence held for 2 years</dd></div>
+          <div><dt>Deposit</dt><dd>KES 10,000, refunded on return</dd></div>
+          <div><dt>Mileage</dt><dd>200 km per day included, KES 25 per extra km</dd></div>
+          <div><dt>Fuel</dt><dd>Return with the same level you collected</dd></div>
+          <div><dt>Payment</dt><dd>M-Pesa, card or cash at pickup</dd></div>
+          <div><dt>Cancellation</dt><dd>Free up to 24 hours before pickup</dd></div>
+        </dl>
+        <div class="addon-table">
+          <h3>Extras, per day</h3>
+          <ul id="addonList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="bookings">
+    <div class="wrap">
+      <h2>My bookings</h2>
+      <p class="muted">Bookings made on this device are listed here.</p>
+      <div id="bookingList" class="booking-list"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Savanna Drive Car Hire, Nairobi. Demo site, no real bookings are taken.</span>
+    <span>Reservations: +254 700 000 000</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="close" id="closeModal" type="button" aria-label="Close">&times;</button>
+
+    <div id="bookView">
+      <h2 id="modalTitle">Reserve</h2>
+      <p class="muted" id="modalTrip"></p>
+      <form id="bookForm" novalidate>
+        <div class="row2">
+          <div>
+            <label for="fullName">Full name</label>
+            <input id="fullName" type="text" autocomplete="name">
+            <p class="field-error" id="errName" hidden></p>
+          </div>
+          <div>
+            <label for="phone">Phone (M-Pesa number)</label>
+            <input id="phone" type="tel" inputmode="tel" placeholder="0712 345 678" autocomplete="tel">
+            <p class="field-error" id="errPhone" hidden></p>
+          </div>
+        </div>
+        <label for="email">Email (optional)</label>
+        <input id="email" type="email" autocomplete="email">
+        <p class="field-error" id="errEmail" hidden></p>
+
+        <fieldset>
+          <legend>Extras</legend>
+          <div id="addonChecks"></div>
+        </fieldset>
+
+        <div class="summary" id="summary"></div>
+        <button class="btn primary block" type="submit">Confirm reservation</button>
+      </form>
+    </div>
+
+    <div id="doneView" hidden>
+      <h2>Reservation confirmed</h2>
+      <p class="ref" id="doneRef"></p>
+      <p id="doneText"></p>
+      <button class="btn primary" id="doneBtn" type="button">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
